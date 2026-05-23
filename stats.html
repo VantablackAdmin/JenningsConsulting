@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Numbers — Small Business Cybersecurity | Jennings Consulting</title>
+  <meta name="description" content="What the data actually says about cyberattacks on small businesses — sourced from the Verizon DBIR, IBM, and federal reporting." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;0,9..144,600;1,9..144,400&family=Libre+Franklin:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ─────────────────── NAV ─────────────────── -->
+  <nav id="nav" class="nav-solid">
+    <a href="index.html" class="nav-logo">Jennings<span class="logo-mark">Consulting</span></a>
+    <ul class="nav-links">
+      <li><a href="index.html#services">Services</a></li>
+      <li><a href="index.html#approach">Approach</a></li>
+      <li><a href="stats.html" class="nav-current">The Numbers</a></li>
+      <li><a href="index.html#contact" class="nav-cta">Get in touch</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger" aria-label="Open menu">
+      <span></span><span></span><span></span>
+    </button>
+  </nav>
+
+  <div class="mobile-menu" id="mobileMenu">
+    <a href="index.html#services" class="mobile-link">Services</a>
+    <a href="index.html#approach" class="mobile-link">Approach</a>
+    <a href="stats.html" class="mobile-link">The Numbers</a>
+    <a href="index.html#contact" class="mobile-link">Get in touch</a>
+  </div>
+
+  <!-- ─────────────────── PAGE HEADER ─────────────────── -->
+  <header class="stats-hero">
+    <div class="stats-hero-inner">
+      <p class="kicker reveal">By the numbers</p>
+      <h1 class="stats-title reveal">"We're too small<br />to be a target."</h1>
+      <p class="stats-sub reveal">It's the most common thing small business owners believe
+        about cybersecurity — and the data says the opposite. Here's what the major
+        annual reports actually found, with every figure sourced.</p>
+    </div>
+  </header>
+
+  <!-- ─────────────────── HEADLINE STAT CARDS ─────────────────── -->
+  <section class="section stats-section">
+    <div class="stat-grid" id="statGrid"><!-- populated by script.js --></div>
+  </section>
+
+  <!-- ─────────────────── CHART 1: WHO GETS HIT ─────────────────── -->
+  <section class="section chart-section chart-section-alt">
+    <div class="chart-wrap reveal">
+      <div class="chart-head">
+        <p class="kicker">Where ransomware lands</p>
+        <h2 class="section-title">Ransomware shows up in far more<br />small-business breaches.</h2>
+        <p class="chart-note">Share of confirmed breaches that included a ransomware
+          component, by organization size.</p>
+      </div>
+      <div class="bar-chart" id="barChart"><!-- populated by script.js --></div>
+      <p class="chart-source">Source: Verizon 2025 Data Breach Investigations Report</p>
+    </div>
+  </section>
+
+  <!-- ─────────────────── CHART 2: HOW THEY GET IN ─────────────────── -->
+  <section class="section chart-section">
+    <div class="chart-wrap reveal">
+      <div class="chart-head">
+        <p class="kicker">How they get in</p>
+        <h2 class="section-title">Most breaches start with<br />the same few doors.</h2>
+        <p class="chart-note">Leading initial-access vectors across all confirmed breaches.</p>
+      </div>
+      <div class="donut-wrap">
+        <svg class="donut" id="donut" viewBox="0 0 42 42" role="img" aria-label="Initial access vectors"></svg>
+        <ul class="donut-legend" id="donutLegend"><!-- populated by script.js --></ul>
+      </div>
+      <p class="chart-source">Source: Verizon 2025 DBIR &amp; IBM Cost of a Data Breach 2025</p>
+    </div>
+  </section>
+
+  <!-- ─────────────────── TAKEAWAY / CTA ─────────────────── -->
+  <section class="section healthcare stats-cta">
+    <div class="hc-inner reveal">
+      <p class="kicker kicker-light">The takeaway</p>
+      <h2 class="section-title section-title-light">Almost all of it traces back
+        to the fundamentals.</h2>
+      <p class="hc-lead">Across thousands of incidents, the same gaps keep showing up:
+        weak or stolen passwords, no multi-factor authentication, unpatched systems,
+        and untested backups. None of these require an enterprise budget to fix — they
+        require someone to actually do them, consistently. That's the job.</p>
+      <a href="index.html#contact" class="btn btn-solid">Request an assessment</a>
+    </div>
+  </section>
+
+  <!-- ─────────────────── SOURCES ─────────────────── -->
+  <section class="section sources-section">
+    <h2 class="sources-title">Sources</h2>
+    <ul class="sources-list" id="sourcesList"><!-- populated by script.js --></ul>
+    <p class="sources-fine">Figures reflect the most recent editions available as of
+      <span id="updated"></span>. Statistics are drawn from published annual reports;
+      this page is informational and updated periodically.</p>
+  </section>
+
+  <!-- ─────────────────── FOOTER ─────────────────── -->
+  <footer class="footer">
+    <div class="footer-logo">Jennings<span class="logo-mark">Consulting</span></div>
+    <p class="footer-tag">Network &amp; systems infrastructure for businesses that
+      can't afford downtime.</p>
+    <p class="footer-fine">© <span id="year"></span> Jennings Consulting · Vienna, WV</p>
+  </footer>
+
+  <script src="stats.js"></script>
+</body>
+</html>
