@@ -23,7 +23,7 @@
   /* ----- TYPE ----- */
   --serif: 'Fraunces', Georgia, serif;
 
-  --approach-image: url('hero.jpg');
+  --approach-image: url('approach.jpg');
 }
 
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }

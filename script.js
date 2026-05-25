@@ -48,16 +48,44 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
-  /* ---------- Contact form (front-end stub) ----------
-     To make this actually send mail, point the <form action> in index.html
-     at a service like Formspree or Web3Forms and remove this preventDefault. */
+  /* ---------- Contact form (Web3Forms) ---------- */
   const form = document.getElementById('contactForm');
   const note = document.getElementById('formNote');
+  const submitBtn = form && form.querySelector('button[type="submit"]');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      note.textContent = 'Thanks — this is a demo form. Wire it to Formspree/Web3Forms to go live.';
-      form.reset();
+
+      const formData = new FormData(form);
+      formData.append('access_key', '0b86cd49-03ba-4f35-82fa-45c2c0707002');
+
+      const originalText = submitBtn.textContent;
+      submitBtn.textContent = 'Sending…';
+      submitBtn.disabled = true;
+      note.textContent = '';
+
+      try {
+        const response = await fetch('https://api.web3forms.com/submit', {
+          method: 'POST',
+          body: formData
+        });
+        const data = await response.json();
+
+        if (response.ok) {
+          note.textContent = 'Message sent — we\'ll be in touch within one business day.';
+          note.style.color = '';
+          form.reset();
+        } else {
+          note.textContent = 'Error: ' + data.message;
+          note.style.color = 'var(--clr-accent, #c0392b)';
+        }
+      } catch {
+        note.textContent = 'Something went wrong. Please try again or email us directly.';
+        note.style.color = 'var(--clr-accent, #c0392b)';
+      } finally {
+        submitBtn.textContent = originalText;
+        submitBtn.disabled = false;
+      }
     });
   }
 
