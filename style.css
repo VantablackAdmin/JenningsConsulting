@@ -70,7 +70,7 @@ body {
 .logo-mark {
   display: block;
   font-family: var(--sans);
-  font-size: .62rem;
+  font-size: 1.0rem;
   font-weight: 500;
   letter-spacing: .42em;
   text-transform: uppercase;
@@ -297,6 +297,14 @@ body {
   margin-top: auto; padding-top: 1.2rem; border-top: 1px solid var(--line);
   font-size: .78rem; letter-spacing: .16em; text-transform: uppercase;
   color: var(--gold-deep); font-weight: 500;
+}
+
+.cards-pricing-note {
+  text-align: center;
+  margin-top: 2rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.85rem;
 }
 
 /* ============================================================
