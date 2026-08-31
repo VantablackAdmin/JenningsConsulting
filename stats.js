@@ -4,32 +4,18 @@
    ============================================================ */
 
 const breachStats = [
-  { value: 88, suffix: '%', label: 'of small-business breaches involve ransomware', detail: 'Versus 39% for large enterprises — attackers go where defenses are thinnest.', source: 'Verizon 2025 DBIR' },
-  { value: 43, suffix: '%', label: 'of all cyberattacks target small businesses', detail: 'SMBs are hit nearly four times as often as larger organizations.', source: 'Verizon 2025 DBIR' },
-  { value: 60, suffix: '%', label: 'of small businesses close within 6 months of an attack', detail: 'A single incident is an existential event for a small company — not just an IT problem.', source: 'Widely cited (Cybersecurity Ventures / multiple)' },
-  { value: 115, prefix: '$', suffix: 'K', label: 'median ransom payment', detail: 'And paying is no guarantee — many who pay never recover all their data.', source: 'Verizon 2025 DBIR' },
-  { value: 50, prefix: '$', suffix: 'K', label: 'median loss from business email compromise', detail: 'A single convincing email impersonating a vendor or executive.', source: 'Verizon 2025 DBIR' },
-  { value: 43, suffix: '%', label: 'of small businesses have no dedicated security staff', detail: 'The protection gap is rarely about tools — it is about no one owning the problem.', source: 'Industry reporting, 2025' }
+  { value: 88, suffix: '%', label: 'of small-business breaches involve ransomware', detail: 'Versus 39% for large enterprises — attackers go where the fundamentals are skipped, not where the target is biggest.', source: 'Verizon 2025 DBIR' }
 ];
 
 const barData = [
-  { label: 'Small &amp; mid-size business', value: 88 },
-  { label: 'Large enterprise',              value: 39 }
-];
-
-/* Violet ramp; named vectors carry emphasis, "everything else" is muted. */
-const donutData = [
-  { label: 'Stolen / abused credentials', value: 22, color: '#cbb6ff' },
-  { label: 'Vulnerability exploitation',  value: 20, color: '#9a7fd0' },
-  { label: 'Phishing',                    value: 16, color: '#7150b0' },
-  { label: 'Everything else',             value: 42, color: '#41386a' }
+  { label: 'Remote monitoring',        value: 94 },
+  { label: 'Help desk support',        value: 91 },
+  { label: 'Backup & disaster recovery', value: 89 }
 ];
 
 const sources = [
-  { name: 'Verizon 2025 Data Breach Investigations Report (DBIR)', org: 'Verizon Business' },
-  { name: 'Cost of a Data Breach Report 2025', org: 'IBM / Ponemon Institute' },
-  { name: 'Internet Crime Report', org: 'FBI Internet Crime Complaint Center (IC3)' },
-  { name: 'Small business cybersecurity statistics, 2025–2026', org: 'Aggregated industry reporting' }
+  { name: 'MSP Benchmark Survey', org: 'Datto' },
+  { name: 'Verizon 2025 Data Breach Investigations Report (DBIR)', org: 'Verizon Business' }
 ];
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -59,32 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
       <span class="bar-label">${b.label}</span>
       <div class="bar-track"><div class="bar-fill" data-width="${b.value}"><span class="bar-val">${b.value}%</span></div></div>`;
     barChart.appendChild(row);
-  });
-
-  /* Donut */
-  const donut = document.getElementById('donut');
-  const legend = document.getElementById('donutLegend');
-  const radius = 15.915;
-  let offset = 25;
-  donutData.forEach(d => {
-    const circle = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
-    circle.setAttribute('class', 'donut-seg');
-    circle.setAttribute('cx', '21'); circle.setAttribute('cy', '21');
-    circle.setAttribute('r', radius);
-    circle.setAttribute('fill', 'transparent');
-    circle.setAttribute('stroke', d.color);
-    circle.setAttribute('stroke-width', '5');
-    circle.setAttribute('stroke-dasharray', `0 100`);
-    circle.setAttribute('stroke-dashoffset', offset);
-    circle.dataset.value = d.value;
-    donut.appendChild(circle);
-    offset -= d.value;
-
-    const li = document.createElement('li');
-    li.innerHTML = `<span class="legend-dot" style="background:${d.color}"></span>
-      <span class="legend-label">${d.label}</span>
-      <span class="legend-val">${d.value}%</span>`;
-    legend.appendChild(li);
   });
 
   /* Sources */
@@ -118,25 +78,26 @@ document.addEventListener('DOMContentLoaded', () => {
   }, { threshold: 0.15 });
   document.querySelectorAll('.reveal').forEach(el => io.observe(el));
 
-  /* Count-up + bar/donut animation */
+  /* Count-up + bar animation */
   const animIO = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (!entry.isIntersecting) return;
       const el = entry.target;
-      if (el.classList.contains('stat-value')) countUp(el, parseInt(el.dataset.target, 10), el.dataset.suffix || '');
+      if (el.classList.contains('stat-value')) countUp(el, parseFloat(el.dataset.target), el.dataset.suffix || '');
       if (el.classList.contains('bar-fill')) el.style.width = el.dataset.width + '%';
-      if (el.classList.contains('donut-seg')) { const v = parseFloat(el.dataset.value); el.style.strokeDasharray = `${v} ${100 - v}`; }
       animIO.unobserve(el);
     });
   }, { threshold: 0.4 });
-  document.querySelectorAll('.stat-value, .bar-fill, .donut-seg').forEach(el => animIO.observe(el));
+  document.querySelectorAll('.stat-value, .bar-fill').forEach(el => animIO.observe(el));
 
   function countUp(el, target, suffix) {
     const dur = 1500, start = performance.now();
+    const isDecimal = target % 1 !== 0;
     const tick = (now) => {
       const p = Math.min((now - start) / dur, 1);
       const eased = 1 - Math.pow(1 - p, 3);
-      el.textContent = Math.round(eased * target) + suffix;
+      const current = eased * target;
+      el.textContent = (isDecimal ? current.toFixed(1) : Math.round(current)) + suffix;
       if (p < 1) requestAnimationFrame(tick);
     };
     requestAnimationFrame(tick);
